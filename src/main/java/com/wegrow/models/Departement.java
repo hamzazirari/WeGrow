@@ -1,4 +1,4 @@
-package com.WeGrow.models;
+package com.wegrow.models;
 
 import org.w3c.dom.Text;
 
