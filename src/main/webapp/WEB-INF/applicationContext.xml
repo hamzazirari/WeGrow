@@ -45,4 +45,9 @@
         <constructor-arg ref="employeRepository"/>
     </bean>
 
+    <bean id="employeService" class="com.wegrow.service.EmployeServiceImpl">
+        <constructor-arg ref="employeRepository"/>
+        <constructor-arg ref="departementRepository"/>
+    </bean>
+
 </beans>
