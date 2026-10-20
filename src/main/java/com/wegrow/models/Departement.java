@@ -1,4 +1,4 @@
-package com.wegrow.model;
+package com.wegrow.models;
 
 import jakarta.persistence.*;
 
