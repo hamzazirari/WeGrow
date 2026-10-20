@@ -1,40 +1,26 @@
-package com.wegrow.models;
+package com.wegrow.model;
 
-import org.w3c.dom.Text;
+import jakarta.persistence.*;
 
+@Entity
+@Table(name = "departement")
 public class Departement {
-    private int id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
     private String nom;
 
-    public Departement(int id, String nom, Text description) {
-        this.id = id;
-        this.nom = nom;
-        this.description = description;
-    }
+    private String description;
 
-    public int getId() {
-        return id;
-    }
+    public Departement() {}
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public Text getDescription() {
-        return description;
-    }
-
-    public void setDescription(Text description) {
-        this.description = description;
-    }
-
-    private Text description;
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getNom() { return nom; }
+    public void setNom(String nom) { this.nom = nom; }
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
 }

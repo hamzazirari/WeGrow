@@ -3,19 +3,23 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
          http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
          http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd
-         http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+         http://www.springframework.org/schema/data/jpa https://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+         http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- 1. Connexion à la base H2 (fichier dans ton dossier utilisateur) -->
+    <!-- Active la lecture des annotations (@Autowired...) en config XML -->
+    <context:annotation-config/>
+
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
-        <property name="jdbcUrl" value="jdbc:h2:~/wegrow-db"/>
-        <property name="username" value="sa"/>
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/wegrow?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC"/>
+        <property name="username" value="root"/>
         <property name="password" value=""/>
     </bean>
 
-    <!-- 2. JPA / Hibernate -->
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"/>
@@ -23,17 +27,21 @@
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="generateDdl" value="true"/>
+                <property name="database" value="MYSQL"/>
             </bean>
         </property>
     </bean>
 
-    <!-- 3. Transactions -->
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <!-- 4. Repositories Spring Data -->
     <jpa:repositories base-package="com.wegrow.repository"/>
+
+    <!-- Services -->
+    <bean id="departementService" class="com.wegrow.service.DepartementServiceImpl">
+        <constructor-arg ref="departementRepository"/>
+    </bean>
 
 </beans>

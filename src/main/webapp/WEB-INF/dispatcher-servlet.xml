@@ -11,7 +11,7 @@
     <!-- Active les annotations Spring MVC et la conversion JSON -->
     <mvc:annotation-driven/>
 
-    <!-- Spring scanne ce package et crée un bean pour chaque classe annotée -->
+    <!-- Spring scanne had package et creee un bean pour chaque classe -->
     <context:component-scan base-package="com.wegrow.controller"/>
-
+    <context:component-scan base-package="com.wegrow.exception"/>
 </beans>
